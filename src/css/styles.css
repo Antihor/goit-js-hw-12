@@ -23,9 +23,13 @@ p {
 .btn {
   width: 88px;
   border-radius: 8px;
+  border-color: transparent;
   color: #fff;
   background: #4E75FF;
   cursor: pointer;
+}
+.btn-LM {
+  height: 40px;
 }
 .gallery {
   list-style: none;
