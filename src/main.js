@@ -61,6 +61,7 @@ function renderImg(data) {
     .join('');
 
   galleryRef.insertAdjacentHTML('beforeend', markup);
+
   lightbox = new SimpleLightbox('.gallery a', optionsSL);
   lightbox.on('show.simplelightbox');
   lightbox.refresh();
