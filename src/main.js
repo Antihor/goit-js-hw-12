@@ -1,14 +1,24 @@
 import axios from 'axios';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const formRef = document.querySelector('.search-form');
 const containerRef = document.querySelector('.container');
 const galleryRef = document.querySelector('.gallery');
 const buttonRef = document.querySelector('.btn-LM');
+const optionsSL = {
+  captions: true,
+  captionSelector: 'img',
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  animation: 250,
+};
 
 let page = 1;
 let per_page = 15;
+let lightbox;
 
 async function fetchImg() {
   const params = new URLSearchParams({
@@ -51,6 +61,9 @@ function renderImg(data) {
     .join('');
 
   galleryRef.insertAdjacentHTML('beforeend', markup);
+  lightbox = new SimpleLightbox('.gallery a', optionsSL);
+  lightbox.on('show.simplelightbox');
+  lightbox.refresh();
 }
 
 formRef.addEventListener('submit', async event => {
@@ -61,7 +74,6 @@ formRef.addEventListener('submit', async event => {
   try {
     const images = await fetchImg();
     renderImg(images);
-    formRef.reset();
     loaderOff();
     showButton();
 
@@ -73,10 +85,10 @@ formRef.addEventListener('submit', async event => {
         position: 'topRight',
       });
 
-      const { height: cardHeight } =
+      const { height: imageHeight } =
         galleryRef.firstElementChild.getBoundingClientRect();
       window.scrollBy({
-        top: cardHeight * 2,
+        top: imageHeight * 2,
         behavior: 'smooth',
       });
     }
@@ -89,6 +101,7 @@ formRef.addEventListener('submit', async event => {
     console.log(error);
     hideButton();
   }
+  formRef.reset();
 });
 
 buttonRef.addEventListener('click', async () => {
@@ -99,10 +112,10 @@ buttonRef.addEventListener('click', async () => {
     renderImg(images);
     loaderOff();
 
-    const { height: cardHeight } =
+    const { height: imageHeight } =
       galleryRef.firstElementChild.getBoundingClientRect();
     window.scrollBy({
-      top: cardHeight * 2,
+      top: imageHeight * 2,
       behavior: 'smooth',
     });
 
