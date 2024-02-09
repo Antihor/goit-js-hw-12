@@ -62,8 +62,6 @@ function renderImg(data) {
 
   galleryRef.insertAdjacentHTML('beforeend', markup);
 
-  lightbox = new SimpleLightbox('.gallery a', optionsSL);
-  lightbox.on('show.simplelightbox');
   lightbox.refresh();
 }
 
@@ -74,6 +72,7 @@ formRef.addEventListener('submit', async event => {
 
   try {
     const images = await fetchImg();
+    page += 1;
     renderImg(images);
     loaderOff();
     showButton();
@@ -102,7 +101,6 @@ formRef.addEventListener('submit', async event => {
     console.log(error);
     hideButton();
   }
-  formRef.reset();
 });
 
 buttonRef.addEventListener('click', async () => {
@@ -129,6 +127,7 @@ buttonRef.addEventListener('click', async () => {
       });
 
       hideButton();
+      searchQuery.reset();
     }
   } catch (error) {
     console.log(error);
@@ -156,3 +155,6 @@ const loaderOff = () => {
     loader.remove();
   }
 };
+
+lightbox = new SimpleLightbox('.gallery a', optionsSL);
+lightbox.on('show.simplelightbox');
