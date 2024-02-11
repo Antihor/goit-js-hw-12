@@ -72,7 +72,6 @@ formRef.addEventListener('submit', async event => {
 
   try {
     const images = await fetchImg();
-    page += 1;
     renderImg(images);
     loaderOff();
     showButton();
