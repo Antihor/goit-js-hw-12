@@ -15,7 +15,6 @@ const optionsSL = {
   captionPosition: 'bottom',
   animation: 250,
 };
-
 let page = 1;
 let per_page = 15;
 let lightbox;
@@ -68,6 +67,7 @@ function renderImg(data) {
 formRef.addEventListener('submit', async event => {
   event.preventDefault();
   loaderOn();
+  page = 1;
   galleryRef.innerHTML = '';
 
   try {
@@ -90,11 +90,6 @@ formRef.addEventListener('submit', async event => {
         top: imageHeight * 2,
         behavior: 'smooth',
       });
-    }
-    if (galleryRef.children.length >= images.totalHits) {
-      hideButton();
-    } else {
-      showButton();
     }
   } catch (error) {
     console.log(error);
